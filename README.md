@@ -12,7 +12,7 @@
 ```
 dnf -y install mod_authnz_pam
 ```
-Ir a /etc/httpd/conf.modules.d/55-authnz_pam.conf y descomentar la siguiente línea:
+Ir a `/etc/httpd/conf.modules.d/55-authnz_pam.conf` y descomentar la siguiente línea:
 ```
 nano /etc/httpd/conf.modules.d/55-authnz_pam.conf
 
