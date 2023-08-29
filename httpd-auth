@@ -1,0 +1,8 @@
+auth       required     pam_listfile.so item=user sense=deny file=/etc/httpd/conf.d/denyusers onerr=succeed
+auth       include      system-auth
+auth       [default=bad] pam_exec.so /usr/local/bin/bin_error_redirect.sh
+account    include      system-auth
+
+
+
+
