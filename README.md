@@ -20,6 +20,7 @@ nano /etc/httpd/conf.modules.d/55-authnz_pam.conf
 LoadModule authnz_pam_module modules/mod_authnz_pam.so
 
 ```
+---
 ### Parte 1
  -  Configure el archivo de configuración de Apache para el sitio correspondiente y especifique las reglas de  acceso al directorio "/archivos_privados".
 - Utilice los módulos PAM adecuados para gestionar la autenticación. Asegúrese de que solo los usuarios del sistema puedan autenticarse exitosamente
@@ -30,7 +31,7 @@ LoadModule authnz_pam_module modules/mod_authnz_pam.so
 
     ```
     # añadir al final
-    <Directory "/var/www/html/auth-pam">
+    <Directory "/var/www/html/archivos_privados">
         SSLRequireSSL
         AuthType Basic
         AuthName "PAM Authentication"
@@ -52,13 +53,15 @@ LoadModule authnz_pam_module modules/mod_authnz_pam.so
     account    include      system-auth
 
     ```
--  Cree una lista de `usuarios que deben ser denegados` el acceso al directorio `/archivos_privados` Esta lista 
+-  Cree una lista de `usuarios que deben ser denegados` el acceso al directorio `/archivos_privados`
+
+     Esta lista 
     debe almacenarse en un archivo separado.
 
     Ir a `/etc/httpd/conf.d/` y crear el archivo lista `denyusers`
 
     ```
-    [root@www ~]# vi /etc/httpd/conf.d/denyusers
+    [root@www ~]# nano /etc/httpd/conf.d/denyusers
     # Crear Nuevo
     # Lista de Usuarios con autenticacion prohibida
     pamDenied
@@ -105,6 +108,16 @@ LoadModule authnz_pam_module modules/mod_authnz_pam.so
 
     #### En `/etc/httpd/conf/httpd.conf`
     Agregar `ErrorDocument 401 /error.html` o `ErrorDocument 401 "mensaje de texto como cadena"`  al final del archivo
+---
+### Pam Login
+<p aling="center">
+        <img src="Readme Images/pamLogin.gif/">     
+</p>
+
+### Pam Denied
+<p aling="center">
+        <img src="Readme Images/pamDenied.gif">     
+</p>
 
 
 ---
@@ -127,6 +140,7 @@ nano /var/log/secure
 cd /etc/pam.d/
 nano /etc/pam.d/httpd-auth
 ```
+---
 ### Parte 2
 
 - Realice un túnel hacia el servidor web implementado en clase, de manera que los recursos de su servidor web puedan ser visualizados desde cualquier lugar por fuera de su red local. Para efectos de prueba, agregar una página personalizada a su sitio web.
