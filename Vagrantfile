@@ -1,25 +1,20 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# All Vagrant configuration is done below. The "2" in Vagrant.configure
-# configures the configuration version (we support older styles for
-# backwards compatibility). Please don't change it unless you know what
-# you're doing.
 Vagrant.configure("2") do |config|
- if Vagrant.has_plugin? "vagrant-vbguest"
- config.vbguest.no_install = true
- config.vbguest.auto_update = false
- config.vbguest.no_remote = true
- end
- config.vm.define :cliente do |cliente|
- cliente.vm.box = "generic/centos9s"
- cliente.vm.network :private_network, ip: "192.168.50.2"
- cliente.vm.hostname = "cliente"
- end
- config.vm.define :servidor do |servidor|
- servidor.vm.box = "generic/centos9s"
- servidor.vm.network :private_network, ip: "192.168.50.3"
- servidor.vm.network "forwarded_port", host:5080, guest:80
- servidor.vm.hostname = "servidor"
- end
+
+  if Vagrant.has_plugin? "vagrant-vbguest"
+    config.vbguest.no_install  = true
+    config.vbguest.auto_update = false
+    config.vbguest.no_remote   = true
+  end
+
+  config.vm.define :servidorRest do |servidorRest|
+    servidorRest.vm.box = "bento/ubuntu-22.04"
+    servidorRest.vm.network :private_network, ip: "192.168.60.3"
+    servidorRest.vm.provision "file", source: "apirest_mysql.py", destination: "/home/vagrant/apirest_mysql.py"
+    servidorRest.vm.provision "file", source: "init.sql", destination: "/home/vagrant/init.sql"
+    servidorRest.vm.provision "shell", path: "script.sh"
+    servidorRest.vm.hostname = "servidorRest"
+  end
 end
