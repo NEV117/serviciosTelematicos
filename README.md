@@ -275,24 +275,76 @@ sudo systemctl enable node_exporter
 sudo systemctl status node_exporter
 ```
 
-## 2. API Rest + MySQL
+## 2. API Rest + MySQL on Ubuntu 22.04 LTS
 
 <details>
-  <summary>Api Rest configuratino</summary>
+  <summary>Api Rest configuration</summary>
   
-  ### Heading
-  1. Foo
-  2. Bar
-     * Baz
-     * Qux
+  ### 1: Vagrant Up
+ 
+  ```
+  vagrant up
+```
 
-### Some Javascript
+### 2: Exportar aplicacion de flask
+ 
+ ir a la ubicacion de la app
+ ```
+  cd /vagrant
+```
+Exportar y correr la aplicacion
+```
+export FLASK_APP=apirest_mysql.py
+python3 -m flask run --host=0.0.0.0
+```
 
-```js
-function logSomething(something) {
-  console.log("Something", something);
-}
+En caso caso de error intentar:
+ ```
+pip install Werkzeug==0.16.1
+```
+
+ ```
+pip install --upgrade Flask Flask-MySQLdb Flask-Cors
+```
+<p aling="center">
+    <img src="Readme Images/script.png"/>     
+</p>
+
+
+### 3: Correr Cliente Rest (se recomienda correrlo en windows)
+Dentro de este repositorio se encuentra la carpeta RestClient el cual es un cleinte hecho en Node.js para consumir apis en este caso se recomienda No correrlo en un maquina virtual para evitar conflictos. En cambio se puede correr en windows
+
+Ir a la carpeta RestClient:
+
+Instalar dependencias
+ ```
+npm i
+```
+
+Correr Cliente
+ ```
+npm start
+```
+<p aling="center">
+    <img src="Readme Images/RestClient.png"/>     
+</p>
+
+Ya desde este cliente se pueden consumir las apis del script de la maquina virtual para eso se deben mandar solicitudes http a los siguientes endpoints
+
+Cabe mencionar que el RestClient puede consumir apis de cualquier endpoint con cors
+
+Endpoints:
+ ```
+http://192.168.60.3:5000/books | http:<MACHINE IP>:<PORT>/books
+```
+```
+http://192.168.60.3:5000/books/:id | http:<MACHINE IP>:<PORT>/books/:id
 ```
 
 </details>
-````
+
+### Preview
+
+<p aling="center">
+    <img src="Readme Images/restClientSimpleTest.gif"/>     
+</p>
