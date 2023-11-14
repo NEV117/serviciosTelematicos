@@ -1,3 +1,7 @@
+### Presentado por
+- Nicolas Escandon 
+- Santiago Carlosama
+
 ## 1. Prometheus + Node Exporter + Grafana on Ubuntu 22.04 LTS
 
 <details>
